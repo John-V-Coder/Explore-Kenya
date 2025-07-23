@@ -1,5 +1,5 @@
-function AdminProductes(){
+function AdminProducts(){
     return <div>Orders</div>
 }
 
-export default AdminProductes;
+export default AdminProducts;
