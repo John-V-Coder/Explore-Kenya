@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const authRouter = require('./routes/auth/auth-routes')
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
+app.use('/api/auth', authRouter);
 
 // Test route
 app.get("/", (req, res) => {

@@ -8,7 +8,7 @@ const initialState = {
   password: "",
 };
 
-
+function onSubmit(){}
 
 function AuthLogin() {
   const [formData, setFormData] = useState(initialState);
