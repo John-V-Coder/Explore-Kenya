@@ -1,4 +1,3 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import AuthLayout from './components/auth/layout';
 import AuthLogin from './pages/auth/login';
@@ -22,7 +21,7 @@ function App() {
   const isAuthenticated = true;
   const user = {
     name: "personal",
-    role: "user",
+    role: "users",
   };
 
   return (
