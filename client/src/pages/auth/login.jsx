@@ -1,11 +1,10 @@
 import CommonForm from "@/components/common/form";
-import { loginFormControls } from "@/components/config";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useToast } from "@/components/components/ui/use-toast";
-import { loginUser } from "@/store/auth-slice/index";
-
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/store/auth-slice";
+import { loginFormControls } from "@/config";
 
 const initialState = {
   email: "",
@@ -28,11 +27,12 @@ function AuthLogin() {
       } else {
         toast({
           title: data?.payload?.message,
-          variant: "outline",
+          variant: "destructive",
         });
       }
     });
   }
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">

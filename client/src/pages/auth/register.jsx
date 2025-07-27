@@ -1,13 +1,10 @@
 import CommonForm from "@/components/common/form";
-import { registerFormControls } from "@/components/config"; 
-import { useState } from "react"; 
-import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "@/store/auth-slice/index";
+import { useToast } from "@/components/components/ui/use-toast";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useToast } from "@/components/components/ui/use-toast"; 
-
-
-
+import { registerFormControls } from "@/config";
+import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "@/store/auth-slice";
 
 const initialState = {
   userName: "",
@@ -19,23 +16,22 @@ function AuthRegister() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {toast} = useToast()
+  const { toast } = useToast();
 
-
-  function onSubmit(event){
+  function onSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(formData)).then ((data)=> {
-      if(data?.payload?.success) {
+    dispatch(registerUser(formData)).then((data) => {
+      if (data?.payload?.success) {
         toast({
-           title : data.payload?.message,
-      });
-      navigate("/auth/login");
-    } else {
-      toast({
-           title : data.payload?.message,
-           variant : "outline",
-      });
-    }
+          title: data?.payload?.message,
+        });
+        navigate("/auth/login");
+      } else {
+        toast({
+          title: data?.payload?.message,
+          variant: "destructive",
+        });
+      }
     });
   }
 

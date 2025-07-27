@@ -2,8 +2,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 
-
-
 //register
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -66,11 +64,13 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
+        process.env.JWT_SECRET, 
       { expiresIn: "60m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
+
+    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict"}).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -90,22 +90,25 @@ const loginUser = async (req, res) => {
 };
 
 //logout
+
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({
     success: true,
     message: "Logged out successfully!",
   });
 };
+
 //auth middleware
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookie.token;
+  const token = req.cookies.token;
   if (!token)
     return res.status(401).json({
       success: false,
       message: "Unauthorised user!",
     });
+
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
@@ -116,8 +119,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-
-
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware};
-   
-
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware };

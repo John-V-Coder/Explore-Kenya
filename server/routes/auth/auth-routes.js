@@ -6,7 +6,6 @@ const {
   authMiddleware,
 } = require("../../controllers/auth/auth-controller");
 
-
 const router = express.Router();
 
 router.post("/register", registerUser);
@@ -20,6 +19,5 @@ router.get("/check-auth", authMiddleware, (req, res) => {
     user,
   });
 });
-    
 
 module.exports = router;
