@@ -1,11 +1,4 @@
-import {
-  BabyIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloudLightning,
-  ShirtIcon,
-  UmbrellaIcon,
-} from "lucide-react";
+import {ChevronLeftIcon, Layers, UmbrellaIcon ,ChevronRightIcon,ShirtIcon,SproutIcon , FlowerIcon , TreePalmIcon, FlaskConicalIcon , BeakerIcon, MountainIcon , ImageIcon , UtensilsIcon , LightbulbIcon , SofaIcon , HardHatIcon , CircleDashedIcon , GemIcon, BackpackIcon, GlobeIcon, LampIcon , LeafIcon , Footprints, Split, Shirt} from "lucide-react";
 import { Button } from "@/components/components/ui/button";
 import { Card, CardContent } from "@/components/components/ui/card";
 import { useEffect, useState } from "react";
@@ -16,46 +9,35 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import { BriefcaseIcon , SproutIcon , FlowerIcon , TreePalmIcon, FlaskConicalIcon , BeakerIcon , FeatherIcon , LayersIcon , MountainIcon , MapIcon , ImageIcon , UtensilsIcon , LightbulbIcon , SofaIcon , HardHatIcon , CircleDashedIcon , GemIcon, BackpackIcon, GlobeIcon, LampIcon , LeafIcon , Footprints, Split, Shirt,Layers } from "lucide-react";
 import { getFeatureImages } from "@/store/common-slice";
 
-
-
 const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "african-art", label: "African Art", icon: GlobeIcon },
-  { id: "home-decor", label: "Home Decor", icon: LampIcon },
-  { id: "wood-carvings", label: "Wood Carvings", icon: UmbrellaIcon },
-  { id: "recycled", label: "Sustainable", icon: LeafIcon },
+  { id: "traditional-cloths", label: "Cultural Fashion", icon: ShirtIcon },
+  { id: "african-art", label: "Art Gallery", icon: GlobeIcon },
+  { id: "home-decor", label: "Handcrafted Home Decor", icon: LampIcon },
+  { id: "wood-carvings", label: "Wood & Soul", icon: UmbrellaIcon },
+  { id: "recycled", label: "Sustainable Treasures", icon: LeafIcon },
 ];
 
 const brandsWithIcon = [
-{ id: "footwear", label: "Footwear", icon: Footprints }, 
-{ id: "tops", label: "Tops", icon: ShirtIcon },
-{ id: "trousers", label: "Trousers", icon: Split },
-{ id: "dresses", label: "Dresses", icon: Shirt },  
-{ id: "bags", label: "Bags", icon: BackpackIcon },
-{ id: "jewelry", label: "Jewelry", icon: GemIcon },
-{ id: "belts", label: "Belts", icon: CircleDashedIcon },
-{ id: "hats", label: "Hats", icon: HardHatIcon }, 
-{ id: "furniture", label: "Furniture", icon: SofaIcon },
-{ id: "lighting", label: "Lighting", icon: LightbulbIcon },
-{ id: "kitchen", label: "Kitchen", icon: UtensilsIcon },
-{ id: "wall-art", label: "Wall Art", icon: ImageIcon },
-{ id: "tribal-wear", label: "Tribal Wear", icon: MapIcon },
-{ id: "masai-products", label: "Maasai Products", icon: MountainIcon },
-{ id: "kitenge", label: "Kitenge", icon: LayersIcon },
-{ id: "native-american", label: "Native American", icon: FeatherIcon },
-{ id: "ankara", label: "Ankara", icon: Layers }, 
-{ id: "beadwork", label: "Beadwork", icon: BeakerIcon },
-{ id: "pottery", label: "Pottery", icon: FlaskConicalIcon },
-{ id: "textiles", label: "Textiles", icon: Layers },
-{ id: "handbags", label: "Handbags", icon: BriefcaseIcon },
-{ id: "organic", label: "Organic", icon: SproutIcon },
-{ id: "planters", label: "Planters", icon: FlowerIcon },
-{ id: "outdoor", label: "Outdoor", icon: TreePalmIcon },
+  { id: "dresses", label: "Dresses", icon: Shirt }, 
+  { id: "trousers", label: "Trousers", icon: Split },
+  { id: "masai-products", label: "Maasai Products", icon: MountainIcon },
+  { id: "tops", label: "Tops", icon: ShirtIcon },
+  { id: "belts", label: "Belts", icon: CircleDashedIcon },
+  { id: "bags", label: "Bags", icon: BackpackIcon },
+  { id: "hats", label: "Hats", icon: HardHatIcon }, 
+  { id: "jewelry", label: "Jewelry", icon: GemIcon },
+  { id: "wall-art", label: "Wall Art", icon: ImageIcon },
+  { id: "footwear", label: "Footwear", icon: Footprints }, 
+  { id: "furniture", label: "Furniture", icon: SofaIcon },
+  { id: "kitchen", label: "Kitchen", icon: UtensilsIcon },
+  { id: "beadwork", label: "Beadwork", icon: BeakerIcon },
+  { id: "pottery", label: "Pottery", icon: FlaskConicalIcon },
+  { id: "textiles", label: "Textiles", icon: Layers },
+  { id: "organic", label: "Organic", icon: SproutIcon },
+  { id: "planters", label: "Planters", icon: FlowerIcon },
+  { id: "outdoor", label: "Outdoor", icon: TreePalmIcon },
 ];
 
 function ShoppingHome() {
@@ -194,7 +176,6 @@ function ShoppingHome() {
           </div>
         </div>
       </section>
-
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop by Craft Type</h2>
@@ -213,7 +194,6 @@ function ShoppingHome() {
           </div>
         </div>
       </section>
-
       <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
@@ -240,5 +220,4 @@ function ShoppingHome() {
     </div>
   );
 }
-
 export default ShoppingHome;

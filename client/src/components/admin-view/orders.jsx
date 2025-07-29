@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 function AdminOrdersView() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { orderList, orderDetails } = useSelector((state) => state.adminOrder || {});
+  const { orderList, orderDetails } = useSelector((state) => state.adminOrder);
   const dispatch = useDispatch();
 
   function handleFetchOrderDetails(getId) {
