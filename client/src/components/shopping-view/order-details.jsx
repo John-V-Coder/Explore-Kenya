@@ -4,10 +4,6 @@ import { DialogContent } from "../components/ui/dialog";
 import { Label } from "../components/ui/label";
 import { Separator } from "../components/ui/separator";
 
-
-
-
-
 function ShoppingOrderDetailsView({ orderDetails }) {
   const { user } = useSelector((state) => state.auth||{});
 

@@ -25,6 +25,7 @@ import { Skeleton } from './components/components/ui/skeleton';
 import { checkAuth } from './store/auth-slice';
 
 function App() {
+
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
@@ -40,6 +41,7 @@ function App() {
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
+
       <Routes>
         <Route
           path="/"

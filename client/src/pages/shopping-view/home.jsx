@@ -1,20 +1,10 @@
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
 import {
-  Airplay,
   BabyIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   CloudLightning,
-  Heater,
-  Images,
-  Shirt,
   ShirtIcon,
-  ShoppingBasket,
   UmbrellaIcon,
-  WashingMachine,
-  WatchIcon,
 } from "lucide-react";
 import { Button } from "@/components/components/ui/button";
 import { Card, CardContent } from "@/components/components/ui/card";
@@ -26,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import { getFeatureImages } from "@/store/common-slice";
+import { getFeatureImages , BriefcaseIcon , SproutIcon , FlowerIcon , TreePalmIcon, FlaskConicalIcon , BeakerIcon , FeatherIcon , LayersIcon , MountainIcon , MapIcon , ImageIcon , UtensilsIcon , LightbulbIcon , SofaIcon , HardHatIcon , CircleDashedIcon , GemIcon, BackpackIcon, GlobeIcon, LampIcon , LeafIcon , Footprints, Split, Shirt,Layers } from "lucide-react";
 
 
 
@@ -34,17 +24,37 @@ const categoriesWithIcon = [
   { id: "men", label: "Men", icon: ShirtIcon },
   { id: "women", label: "Women", icon: CloudLightning },
   { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
-  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+  { id: "african-art", label: "African Art", icon: GlobeIcon },
+  { id: "home-decor", label: "Home Decor", icon: LampIcon },
+  { id: "wood-carvings", label: "Wood Carvings", icon: UmbrellaIcon },
+  { id: "recycled", label: "Sustainable", icon: LeafIcon },
 ];
 
 const brandsWithIcon = [
-  { id: "nike", label: "Nike", icon: Shirt },
-  { id: "adidas", label: "Adidas", icon: WashingMachine },
-  { id: "puma", label: "Puma", icon: ShoppingBasket },
-  { id: "levi", label: "Levi's", icon: Airplay },
-  { id: "zara", label: "Zara", icon: Images },
-  { id: "h&m", label: "H&M", icon: Heater },
+{ id: "footwear", label: "Footwear", icon: Footprints }, 
+{ id: "tops", label: "Tops", icon: ShirtIcon },
+{ id: "trousers", label: "Trousers", icon: Split },
+{ id: "dresses", label: "Dresses", icon: Shirt },  
+{ id: "bags", label: "Bags", icon: BackpackIcon },
+{ id: "jewelry", label: "Jewelry", icon: GemIcon },
+{ id: "belts", label: "Belts", icon: CircleDashedIcon },
+{ id: "hats", label: "Hats", icon: HardHatIcon }, 
+{ id: "furniture", label: "Furniture", icon: SofaIcon },
+{ id: "lighting", label: "Lighting", icon: LightbulbIcon },
+{ id: "kitchen", label: "Kitchen", icon: UtensilsIcon },
+{ id: "wall-art", label: "Wall Art", icon: ImageIcon },
+{ id: "tribal-wear", label: "Tribal Wear", icon: MapIcon },
+{ id: "masai-products", label: "Maasai Products", icon: MountainIcon },
+{ id: "kitenge", label: "Kitenge", icon: LayersIcon },
+{ id: "native-american", label: "Native American", icon: FeatherIcon },
+{ id: "ankara", label: "Ankara", icon: Layers }, 
+{ id: "beadwork", label: "Beadwork", icon: BeakerIcon },
+{ id: "pottery", label: "Pottery", icon: FlaskConicalIcon },
+{ id: "textiles", label: "Textiles", icon: Layers },
+{ id: "handbags", label: "Handbags", icon: BriefcaseIcon },
+{ id: "organic", label: "Organic", icon: SproutIcon },
+{ id: "planters", label: "Planters", icon: FlowerIcon },
+{ id: "outdoor", label: "Outdoor", icon: TreePalmIcon },
 ];
 
 function ShoppingHome() {
@@ -186,7 +196,7 @@ function ShoppingHome() {
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Shop by Craft Type</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {brandsWithIcon.map((brandItem) => (
               <Card
