@@ -67,7 +67,7 @@ function ProductImageUpload({
 
   return (
     <div
-      className={`w-full  mt-4 "max-w-md mx-auto"}`}
+      className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
     >
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
@@ -102,7 +102,7 @@ function ProductImageUpload({
             <div className="flex items-center">
               <FileIcon className="w-8 text-primary mr-2 h-8" />
             </div>
-            <p className="text-sm font-medium">{imageFile.Name}</p>
+            <p className="text-sm font-medium">{imageFile.name}</p>
             <Button
               variant="ghost"
               size="icon"

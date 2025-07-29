@@ -7,8 +7,7 @@ import { addProductFormElements } from "@/config";
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@/components/components/ui/use-toast";
-import {addNewProduct,deleteProduct,editProduct,fetchAllProducts,} from "@/store/admin/products-slice/index";
-
+import {addNewProduct,deleteProduct,editProduct,fetchAllProducts,} from "@/store/admin/products-slice";
 
 const initialFormData = {
   image: null,

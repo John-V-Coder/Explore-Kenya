@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import { getFeatureImages , BriefcaseIcon , SproutIcon , FlowerIcon , TreePalmIcon, FlaskConicalIcon , BeakerIcon , FeatherIcon , LayersIcon , MountainIcon , MapIcon , ImageIcon , UtensilsIcon , LightbulbIcon , SofaIcon , HardHatIcon , CircleDashedIcon , GemIcon, BackpackIcon, GlobeIcon, LampIcon , LeafIcon , Footprints, Split, Shirt,Layers } from "lucide-react";
+import { BriefcaseIcon , SproutIcon , FlowerIcon , TreePalmIcon, FlaskConicalIcon , BeakerIcon , FeatherIcon , LayersIcon , MountainIcon , MapIcon , ImageIcon , UtensilsIcon , LightbulbIcon , SofaIcon , HardHatIcon , CircleDashedIcon , GemIcon, BackpackIcon, GlobeIcon, LampIcon , LeafIcon , Footprints, Split, Shirt,Layers } from "lucide-react";
+import { getFeatureImages } from "@/store/common-slice";
 
 
 

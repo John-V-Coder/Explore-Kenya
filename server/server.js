@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -15,7 +17,6 @@ const shopReviewRouter = require("./routes/shop/review-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
