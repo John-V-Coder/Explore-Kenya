@@ -3,7 +3,6 @@ import AdminSideBar from "./sidebar"
 import AdminHeader from "./header"
 import { useState } from "react";
 
-
 function AdminLayout(){
 
   const [openSidebar, setOpenSidebar] = useState(false)

@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "../components/ui/use-toast";
-import {
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@radix-ui/react-dialog";
+import {DialogContent,} from "@radix-ui/react-dialog";
 import { Label } from "../components/ui/label";
 import { Badge } from "../components/ui/badge";
 import { Separator } from "@radix-ui/react-separator";
@@ -15,7 +11,6 @@ import {
   updateOrderStatus,
 } from "@/store/admin/order-slice";
 import { useState } from "react";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const initialFormData = {
   status: "",

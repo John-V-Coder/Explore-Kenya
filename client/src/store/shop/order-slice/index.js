@@ -12,9 +12,10 @@ const initialState = {
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
+    console.log("Sending order data:", orderData); 
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/shop/order/create`,
-      orderData
+      orderData,
     );
 
     return response.data;

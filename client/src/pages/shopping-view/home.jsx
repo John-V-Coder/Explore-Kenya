@@ -12,11 +12,11 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 
 const categoriesWithIcon = [
-  { id: "traditional-cloths", label: "Cultural Fashion", icon: ShirtIcon },
-  { id: "african-art", label: "Art Gallery", icon: GlobeIcon },
-  { id: "home-decor", label: "Handcrafted Home Decor", icon: LampIcon },
-  { id: "wood-carvings", label: "Wood & Soul", icon: UmbrellaIcon },
-  { id: "recycled", label: "Sustainable Treasures", icon: LeafIcon },
+  { id: "traditional-cloths", label: "Cultural Fashion", icon: ShirtIcon, description: "Authentic Maasai shukas, kikoys, and traditional attire" },
+  { id: "african-art", label: "Art Gallery", icon: GlobeIcon, description: "Tribal portraits and cultural paintings" },
+  { id: "home-decor", label: "Handcrafted Home Decor", icon: LampIcon, description: "Wooden carvings and kitenge textiles" },
+  { id: "wood-carvings", label: "Wood & Soul", icon: UmbrellaIcon, description: "Traditional woodwork and sculptures" },
+  { id: "recycled", label: "Sustainable Treasures", icon: LeafIcon, description: "Eco-friendly crafts from recycled materials" },
 ];
 
 const brandsWithIcon = [
@@ -46,9 +46,7 @@ function ShoppingHome() {
     (state) => state.shopProducts  
   );
   const { featureImageList } = useSelector((state) => state.commonFeature);
-
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -60,7 +58,6 @@ function ShoppingHome() {
     const currentFilter = {
       [section]: [getCurrentItem.id],
     };
-
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
     navigate(`/shop/listing`);
   }
@@ -94,7 +91,6 @@ function ShoppingHome() {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
     }, 15000);
-
     return () => clearInterval(timer);
   }, [featureImageList]);
 
@@ -107,39 +103,52 @@ function ShoppingHome() {
     );
   }, [dispatch]);
 
-  console.log(productList, "productList");
-
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-white">
+      {/* Hero Section with Professional Carousel */}
+      <div className="relative w-full h-[70vh] overflow-hidden bg-gradient-to-br from-red-50 to-green-50">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
-              <img
-                src={slide?.image}
+              <div
                 key={index}
                 className={`${
                   index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-              />
+                } absolute inset-0 transition-opacity duration-1000`}
+              >
+                <img
+                  src={slide?.image}
+                  alt={`Featured product ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              </div>
             ))
-          : null}
+          : (
+            <div className="absolute inset-0 bg-gradient-to-br from-red-600 via-green-600 to-black flex items-center justify-center">
+              <div className="text-center text-white space-y-4">
+                <h1 className="text-5xl font-bold">Explore Kenya</h1>
+                <p className="text-xl">Authentic Cultural Treasures</p>
+              </div>
+            </div>
+          )}
+
+        {/* Professional Navigation Buttons */}
         <Button
           variant="outline"
           size="icon"
           onClick={() =>
             setCurrentSlide(
               (prevSlide) =>
-                (prevSlide - 1 + featureImageList.length) %
-                featureImageList.length
+                (prevSlide - 1 + featureImageList.length) % featureImageList.length
             )
           }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
+          className="absolute top-1/2 left-6 transform -translate-y-1/2 bg-white/90 hover:bg-white border-0 shadow-lg w-12 h-12"
         >
-          <ChevronLeftIcon className="w-4 h-4" />
+          <ChevronLeftIcon className="w-6 h-6 text-gray-800" />
         </Button>
         <Button
           variant="outline"
@@ -149,69 +158,169 @@ function ShoppingHome() {
               (prevSlide) => (prevSlide + 1) % featureImageList.length
             )
           }
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
+          className="absolute top-1/2 right-6 transform -translate-y-1/2 bg-white/90 hover:bg-white border-0 shadow-lg w-12 h-12"
         >
-          <ChevronRightIcon className="w-4 h-4" />
+          <ChevronRightIcon className="w-6 h-6 text-gray-800" />
         </Button>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {featureImageList?.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
       </div>
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by category
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categoriesWithIcon.map((categoryItem) => (
+
+      {/* Categories Section - Professional Layout */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Discover Our <span className="text-red-600">Cultural Categories</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-green-600 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Each category represents a unique aspect of Kenyan culture, crafted by local artisans who pour their heritage into every piece
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            {categoriesWithIcon.map((categoryItem, index) => (
               <Card
-                onClick={() =>
-                  handleNavigateToListingPage(categoryItem, "category")
-                }
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                key={categoryItem.id}
+                onClick={() => handleNavigateToListingPage(categoryItem, "category")}
+                className="group cursor-pointer border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-gradient-to-br from-white to-gray-50"
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{categoryItem.label}</span>
+                <CardContent className="p-8 text-center space-y-4">
+                  <div className="relative">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-red-100 to-green-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <categoryItem.icon className="w-10 h-10 text-red-600 group-hover:text-green-600 transition-colors duration-300" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900 group-hover:text-red-600 transition-colors duration-300">
+                    {categoryItem.label}
+                  </h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {categoryItem.description}
+                  </p>
+                  <div className="pt-2">
+                    <span className="text-red-600 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Explore Collection →
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Craft Type</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+      {/* Craft Types Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Browse by <span className="text-green-600">Craft Specialization</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-green-600 to-red-600 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              From traditional beadwork to contemporary fashion, discover the diverse skills of Kenyan artisans
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
             {brandsWithIcon.map((brandItem) => (
               <Card
+                key={brandItem.id}
                 onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                className="group cursor-pointer border-0 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-white"
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
+                <CardContent className="p-6 text-center space-y-3">
+                  <div className="w-14 h-14 mx-auto bg-gradient-to-br from-green-100 to-red-100 rounded-lg flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-green-200 group-hover:to-red-200 transition-all duration-300">
+                    <brandItem.icon className="w-7 h-7 text-green-600 group-hover:text-red-600 transition-colors duration-300" />
+                  </div>
+                  <span className="font-semibold text-sm text-gray-900 group-hover:text-green-600 transition-colors duration-300">
+                    {brandItem.label}
+                  </span>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      {/* Featured Products Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Featured <span className="text-red-600">Artisan Products</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-green-600 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Handpicked selections showcasing the finest craftsmanship from talented Kenyan artists
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {productList && productList.length > 0
               ? productList.map((productItem) => (
-                  <ShoppingProductTile
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
+                  <div key={productItem.id} className="group">
+                    <ShoppingProductTile
+                      handleGetProductDetails={handleGetProductDetails}
+                      product={productItem}
+                      handleAddtoCart={handleAddtoCart}
+                    />
+                  </div>
                 ))
-              : null}
+              : (
+                // Loading skeleton or empty state
+                Array.from({ length: 8 }).map((_, index) => (
+                  <Card key={index} className="animate-pulse">
+                    <CardContent className="p-4">
+                      <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                      <div className="bg-gray-200 h-4 rounded mb-2"></div>
+                      <div className="bg-gray-200 h-4 rounded w-2/3"></div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
           </div>
         </div>
       </section>
+
+      {/* Mission Statement Section */}
+      <footer className="bg-gray-900 text-white py-8">
+  <div className="container mx-auto px-6">
+    <div className="flex justify-center space-x-6">
+      <h1>Social Media Platforms </h1>
+      <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+        <i className="fab fa-facebook-f"></i>
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+        <i className="fab fa-twitter"></i>
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+        <i className="fab fa-instagram"></i>
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+        <i className="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+     <div className="text-center text-gray-500 text-sm">
+      <p>&copy; {new Date().getFullYear()} Explore Kenya. All rights reserved.</p>
+      <p>Developed by <span className="text-white font-medium">John Vernest</span></p>
+    </div>
+  </div>
+</footer>
+
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
@@ -220,4 +329,5 @@ function ShoppingHome() {
     </div>
   );
 }
+
 export default ShoppingHome;
