@@ -57,12 +57,12 @@ export const addProductFormElements = [
     label: "Category",
     name: "category",
     componentType: "select",
-    options: [,
-    { id: "traditional-cloths", label: "Cultural Fashion" },
-    { id: "african-art", label: "Art Gallery" },
-    { id: "home-decor", label: "Home Decor" },
-    { id: "wood-carvings", label: "Wood & Soul" },
-    { id: "recycled", label: "Sustainable Treasures"},
+    options: [
+      { id: "men", label: "Men" },
+      { id: "women", label: "Women" },
+      { id: "kids", label: "Kids" },
+      { id: "accessories", label: "Accessories" },
+      { id: "footwear", label: "Footwear" },
     ],
   },
   {
@@ -70,24 +70,12 @@ export const addProductFormElements = [
     name: "brand",
     componentType: "select",
     options: [
-    { id: "dresses", label: "Dresses" },
-    { id: "trousers", label: "Trousers" },
-    { id: "masai-products", label: "Maasai Products" },
-    { id: "tops", label: "Tops" },
-    { id: "belts", label: "Belts" },
-    { id: "bags", label: "Bags" },
-    { id: "hats", label: "Hats" },
-    { id: "jewelry", label: "Jewelry" },
-    { id: "wall-art", label: "Wall Art" },
-    { id: "footwear", label: "Footwear" },
-    { id: "furniture", label: "Furniture" },
-    { id: "kitchen", label: "Kitchen" },
-    { id: "beadwork", label: "Beadwork" },
-    { id: "pottery", label: "Pottery" },
-    { id: "textiles", label: "Textiles" },
-    { id: "organic", label: "Organic" },
-    { id: "planters", label: "Planters" },
-    { id: "outdoor", label: "Outdoor" },
+      { id: "nike", label: "Nike" },
+      { id: "adidas", label: "Adidas" },
+      { id: "puma", label: "Puma" },
+      { id: "levi", label: "Levi's" },
+      { id: "zara", label: "Zara" },
+      { id: "h&m", label: "H&M" },
     ],
   },
   {
@@ -113,79 +101,83 @@ export const addProductFormElements = [
   },
 ];
 
-// Shopping Header Menu Items
 export const shoppingViewHeaderMenuItems = [
-  { id: "home", label: "Home", path: "/shop/home" },
-  { id: "products", label: " All Products", path: "/shop/listing" },
-  { id: "traditional-cloths", label: "Cultural Fashion", path: "/shop/listing" },
-  { id: "african-art", label: "Art Gallery", path: "/shop/listing" },
-  { id: "home-decor", label: "Handcrafted Home Decor", path: "/shop/listing" },
-  { id: "wood-carvings", label: "Wood & Soul", path: "/shop/listing" },
-  { id: "recycled", label: "Sustainable Treasures", path: "/shop/listing" },
-  { id: "search", label: "Search Product", path: "/shop/search" },
+  {
+    id: "home",
+    label: "Home",
+    path: "/shop/home",
+  },
+  {
+    id: "products",
+    label: "Products",
+    path: "/shop/listing",
+  },
+  {
+    id: "men",
+    label: "Men",
+    path: "/shop/listing",
+  },
+  {
+    id: "women",
+    label: "Women",
+    path: "/shop/listing",
+  },
+  {
+    id: "kids",
+    label: "Kids",
+    path: "/shop/listing",
+  },
+  {
+    id: "footwear",
+    label: "Footwear",
+    path: "/shop/listing",
+  },
+  {
+    id: "accessories",
+    label: "Accessories",
+    path: "/shop/listing",
+  },
+  {
+    id: "search",
+    label: "Search",
+    path: "/shop/search",
+  },
 ];
 
-// Category Options (from categoriesWithIcon)
 export const categoryOptionsMap = {
-  traditionalcloths: "Cultural Fashion",
-  "african-art": "Art Gallery",
-  "home-decor": "Handcrafted Home Decor",
-  "wood-carvings": "Wood & Soul",
-  recycled: "Sustainable Treasures",
-};
-
-// Brand/Product Type Options (from brandsWithIcon)
-export const brandOptionsMap = {
+  men: "Men",
+  women: "Women",
+  kids: "Kids",
+  accessories: "Accessories",
   footwear: "Footwear",
-  tops: "Tops",
-  trousers: "Trousers",
-  dresses: "Dresses",
-  bags: "Bags",
-  jewelry: "Jewelry",
-  belts: "Belts",
-  hats: "Hats",
-  furniture: "Furniture",
-  kitchen: "Kitchen",
-  "wall-art": "Wall Art",
-  beadwork: "Beadwork",
-  pottery: "Pottery",
-  textiles: "Textiles",
-  organic: "Organic",
-  planters: "Planters",
-  outdoor: "Outdoor",
 };
 
-// Filter Options for UI Filters
+export const brandOptionsMap = {
+  nike: "Nike",
+  adidas: "Adidas",
+  puma: "Puma",
+  levi: "Levi",
+  zara: "Zara",
+  "h&m": "H&M",
+};
+
 export const filterOptions = {
   category: [
-    { id: "traditional-cloths", label: "Cultural Fashion" },
-    { id: "african-art", label: "Art Gallery" },
-    { id: "home-decor", label: "Home Decor" },
-    { id: "wood-carvings", label: "Wood & Soul" },
-    { id: "recycled", label: "Sustainable Treasures" },
+    { id: "men", label: "Men" },
+    { id: "women", label: "Women" },
+    { id: "kids", label: "Kids" },
+    { id: "accessories", label: "Accessories" },
+    { id: "footwear", label: "Footwear" },
   ],
   brand: [
-    { id: "dresses", label: "Dresses" },
-    { id: "trousers", label: "Trousers" },
-    { id: "masai-products", label: "Maasai Products" },
-    { id: "tops", label: "Tops" },
-    { id: "belts", label: "Belts" },
-    { id: "bags", label: "Bags" },
-    { id: "hats", label: "Hats" },
-    { id: "jewelry", label: "Jewelry" },
-    { id: "wall-art", label: "Wall Art" },
-    { id: "footwear", label: "Footwear" },
-    { id: "furniture", label: "Furniture" },
-    { id: "kitchen", label: "Kitchen" },
-    { id: "beadwork", label: "Beadwork" },
-    { id: "pottery", label: "Pottery" },
-    { id: "textiles", label: "Textiles" },
-    { id: "organic", label: "Organic" },
-    { id: "planters", label: "Planters" },
-    { id: "outdoor", label: "Outdoor" },
+    { id: "nike", label: "Nike" },
+    { id: "adidas", label: "Adidas" },
+    { id: "puma", label: "Puma" },
+    { id: "levi", label: "Levi's" },
+    { id: "zara", label: "Zara" },
+    { id: "h&m", label: "H&M" },
   ],
 };
-
 
 export const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },

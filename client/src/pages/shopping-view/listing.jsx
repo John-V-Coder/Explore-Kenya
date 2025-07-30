@@ -12,8 +12,6 @@ import { sortOptions } from "@/config";
 import { fetchCartItems, addToCart } from "@/store/shop/cart-slice";
 import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 
-
-
 function createSearchParamsHelper(filterParams) {
   const queryParams = [];
 

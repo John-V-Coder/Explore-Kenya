@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -28,7 +27,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 // Middlewares
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: [
         "Content-Type",

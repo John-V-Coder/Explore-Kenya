@@ -15,7 +15,7 @@ function PaypalReturnPage() {
   useEffect(() => {
     if (paymentId && payerId) {
       const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
-
+      console.error("PayPal Error:", error.response);
       dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");

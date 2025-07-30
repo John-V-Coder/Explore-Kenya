@@ -15,11 +15,6 @@ function AuthLayout() {
               </div>
               <span className="text-2xl font-bold text-gray-900">Explore Kenya</span>
             </Link>
-            <div className="flex items-center space-x-8">
-              <Link to="/auth" className="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium">
-                Get Started
-              </Link>
-            </div>
           </div>
         </div>
       </nav>
