@@ -2,11 +2,11 @@ import { Button } from "@/components/components/ui/button";
 import { useToast } from "@/components/components/ui/use-toast";
 import Address from "@/components/shopping-view/address";
 import UserCartItemsContent from "@/components/shopping-view/cart-item-content";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { } from "react-redux";
 import img from "../../assets/account.jpg";
 import { createNewOrder } from "@/store/shop/order-slice";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
@@ -16,8 +16,7 @@ function ShoppingCheckout() {
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
-
-  console.log(currentSelectedAddress, "cartItems");
+  const checkoutSectionRef = useRef(null);
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
@@ -38,7 +37,6 @@ function ShoppingCheckout() {
         title: "Your cart is empty. Please add items to proceed",
         variant: "destructive",
       });
-
       return;
     }
     if (currentSelectedAddress === null) {
@@ -46,7 +44,6 @@ function ShoppingCheckout() {
         title: "Please select one address to proceed.",
         variant: "destructive",
       });
-
       return;
     }
 
@@ -82,7 +79,6 @@ function ShoppingCheckout() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "sangam");
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
       } else {
@@ -90,6 +86,10 @@ function ShoppingCheckout() {
       }
     });
   }
+
+  const scrollToCheckout = () => {
+    checkoutSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   if (approvalURL) {
     window.location.href = approvalURL;
@@ -100,29 +100,72 @@ function ShoppingCheckout() {
       <div className="relative h-[300px] w-full overflow-hidden">
         <img src={img} className="h-full w-full object-cover object-center" />
       </div>
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
         <Address
           selectedId={currentSelectedAddress}
           setCurrentSelectedAddress={setCurrentSelectedAddress}
         />
+        
         <div className="flex flex-col gap-4">
-          {cartItems && cartItems.items && cartItems.items.length > 0
-            ? cartItems.items.map((item) => (
-                <UserCartItemsContent cartItem={item} />
-              ))
-            : null}
-          <div className="mt-8 space-y-4">
-            <div className="flex justify-between">
-              <span className="font-bold">Total</span>
-              <span className="font-bold">${totalCartAmount}</span>
+          {/* Floating navigation button for long cart lists */}
+          {cartItems?.items?.length > 3 && (
+            <div className="fixed bottom-20 right-5 z-10">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full shadow-lg"
+                onClick={scrollToCheckout}
+              >
+                <ArrowDown className="h-4 w-4" />
+              </Button>
             </div>
+          )}
+
+          {/* Cart items section with max height and scroll */}
+          <div className="max-h-[60vh] overflow-y-auto pr-2 space-y-4">
+            {cartItems && cartItems.items && cartItems.items.length > 0
+              ? cartItems.items.map((item) => (
+                  <UserCartItemsContent key={item.productId} cartItem={item} />
+                ))
+              : <p className="text-center text-gray-500">Your cart is empty</p>}
           </div>
-          <div className="mt-4 w-full">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
-              {isPaymentStart
-                ? "Processing Paypal Payment..."
-                : "Checkout with Paypal"}
-            </Button>
+
+          {/* Checkout section with ref for navigation */}
+          <div ref={checkoutSectionRef} className="mt-8 space-y-4 sticky bottom-0 bg-white pt-4 pb-6 border-t">
+            <div className="flex justify-between text-lg">
+              <span className="font-bold">Subtotal</span>
+              <span className="font-bold">${totalCartAmount.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>Shipping</span>
+              <span>Calculated at next step</span>
+            </div>
+            
+            <div className="mt-4 w-full">
+              <Button 
+                onClick={handleInitiatePaypalPayment} 
+                className="w-full h-12 text-lg"
+                disabled={isPaymentStart}
+              >
+                {isPaymentStart
+                  ? "Processing Paypal Payment..."
+                  : "Proceed to Payment"}
+              </Button>
+            </div>
+
+            {cartItems?.items?.length > 3 && (
+              <div className="text-center mt-2">
+                <Button
+                  variant="link"
+                  className="text-gray-600"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                >
+                  <ArrowUp className="h-4 w-4 mr-1" />
+                  Back to top
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
