@@ -50,8 +50,8 @@ function AuthLayout() {
             Explore Kenya
           </Link>
           <div className="hidden md:flex space-x-6">
-            <Link to="/about" className="text-gray-600 hover:text-blue-600">About Us</Link>
-            <Link to="/profile" className="text-gray-600 hover:text-blue-600">Founder</Link>
+            <Link to="/" className="text-gray-600 hover:text-blue-600">About Us</Link>
+            <Link to="/" className="text-gray-600 hover:text-blue-600">Partners</Link>
           </div>
         </div>
       </header>
