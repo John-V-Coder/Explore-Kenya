@@ -1,5 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
+import marketplaceImg from "../../assets/marketplace.jpg";
+import handcraftImg from "../../assets/handcraft.jpg";
+import homeDecorImg from "../../assets/home-decore.jpeg";
+import woodSoulImg from "../../assets/wood-soul.png";
+import jewelryImg from "../../assets/Artke.jpg";
+import beadingImg from "../../assets/beading.jpg";
+import materialsImg from "../../assets/materials.jpg";
+import founderImg from "../../assets/founderP.png";
 
 function AuthLayout() {
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -18,10 +26,10 @@ function AuthLayout() {
       title: "Handcraft Items",
       description: "Upcyled and Sustainable products",
       color: "bg-red-100 border-red-300 text-red-700",
-      image: "/assets/clothing.jpg",
+      image: handcraftImg,
       features: [
-        { text: "Custom designs", image: "/assets/tailor.jpg" },
-        { text: "Authentic patterns", image: "/assets/patterns.jpg" }
+        { text: "home-decore", image: homeDecorImg },
+        { text: "wood and soul", image: woodSoulImg }
       ],
       artisans: "50+ Artist Items",
       price: "50$-1000$"
@@ -31,10 +39,10 @@ function AuthLayout() {
       title: "Art Gallery",
       description: "Talented Artisans Products",
       color: "bg-emerald-100 border-emerald-300 text-emerald-700",
-      image: "/assets/jewelry.jpg",
+      image: jewelryImg,
       features: [
-        { text: "Traditional techniques", image: "/assets/beading.jpg" },
-        { text: "Quality materials", image: "/assets/materials.jpg" }
+        { text: "Traditional techniques", image: beadingImg },
+        { text: "Quality materials", image: materialsImg }
       ],
       artisans: "35+ Artist Items",
       price: "50$-1000$"
@@ -79,7 +87,7 @@ function AuthLayout() {
                   </div>
                   <div className="md:w-1/3 mt-6 md:mt-0">
                     <img 
-                      src="/assets/marketplace-screenshot.jpg" 
+                      src={marketplaceImg} 
                       alt="Explore Kenya Platform"
                       className="w-full h-auto rounded border"
                     />
@@ -153,7 +161,7 @@ function AuthLayout() {
               <div className="bg-white p-6 rounded-lg shadow-sm border flex flex-col md:flex-row">
                 <div className="md:w-1/4 mb-4 md:mb-0 md:pr-6">
                   <img 
-                    src="/assets/founder-profile.jpg" 
+                    src={founderImg} 
                     alt="John Vernest"
                     className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 mx-auto"
                   />
