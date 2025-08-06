@@ -25,8 +25,7 @@ import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../components/ui/label";
 import { resetTokenAndCredentials } from "@/store/auth-slice";
 
-
-function MenuItems() {
+function MenuItems({ onItemClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -49,6 +48,11 @@ function MenuItems() {
           new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
         )
       : navigate(getCurrentMenuItem.path);
+
+    // Close mobile menu after navigation
+    if (onItemClick) {
+      onItemClick();
+    }
   }
 
   return (
@@ -66,7 +70,7 @@ function MenuItems() {
   );
 }
 
-function HeaderRightContent() {
+function HeaderRightContent({ onItemClick }) {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState(false);
@@ -78,6 +82,25 @@ function HeaderRightContent() {
     dispatch(resetTokenAndCredentials());
     sessionStorage.clear();
     navigate("/auth/login");
+    
+    // Close mobile menu after logout
+    if (onItemClick) {
+      onItemClick();
+    }
+  }
+
+  function handleAccountClick() {
+    navigate("/shop/account");
+    
+    // Close mobile menu after navigation
+    if (onItemClick) {
+      onItemClick();
+    }
+  }
+
+  function handleCartClick() {
+    setOpenCartSheet(true);
+    
   }
 
   useEffect(() => {
@@ -90,7 +113,7 @@ function HeaderRightContent() {
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
-          onClick={() => setOpenCartSheet(true)}
+          onClick={handleCartClick}
           variant="outline"
           size="icon"
           className="relative"
@@ -122,7 +145,7 @@ function HeaderRightContent() {
         <DropdownMenuContent side="right" className="w-56">
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+          <DropdownMenuItem onClick={handleAccountClick}>
             <UserCog className="mr-2 h-4 w-4" />
             Account
           </DropdownMenuItem>
@@ -139,6 +162,11 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMobileMenuClose = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
@@ -147,7 +175,7 @@ function ShoppingHeader() {
           <HousePlug className="h-6 w-6" />
           <span className="font-bold">Explore-Ke</span>
         </Link>
-        <Sheet>
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="lg:hidden">
               <Menu className="h-6 w-6" />
@@ -155,8 +183,8 @@ function ShoppingHeader() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-            <MenuItems />
-            <HeaderRightContent />
+            <MenuItems onItemClick={handleMobileMenuClose} />
+            <HeaderRightContent onItemClick={handleMobileMenuClose} />
           </SheetContent>
         </Sheet>
         <div className="hidden lg:block">
