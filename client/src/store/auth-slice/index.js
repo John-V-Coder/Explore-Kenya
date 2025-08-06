@@ -5,6 +5,8 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
+  token: null,
+  error: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -55,15 +57,37 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+//export const checkAuth = createAsyncThunk(
+  //"/auth/checkauth",
+
+ // async () => {
+   // const response = await axios.get(
+     // `${import.meta.env.VITE_API_URL}/api/auth/check-auth`,
+      //{
+       // withCredentials: true,
+       // headers: {
+          //"Cache-Control":
+          //  "no-store, no-cache, must-revalidate, proxy-revalidate",
+        //},
+      //}
+    //);
+
+  //  return response.data;
+  //}
+//);
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
 
-  async () => {
+  async (token) => {
+    if (!token) {
+      throw new Error('No token provided');
+    }
+    
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/auth/check-auth`,
       {
-        withCredentials: true,
         headers: {
+          Authorization : `Bearer ${token}`,
           "Cache-Control":
             "no-store, no-cache, must-revalidate, proxy-revalidate",
         },
@@ -79,6 +103,15 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {},
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    resetTokenAndCredentials :(state)=>{
+      state.isAuthenticated = false
+      state.user = null
+      state.token = null
+      sessionStorage.removeItem('token');
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -99,26 +132,32 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
+        console.log('Auth Slice: Login fulfilled:', action.payload);
 
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
+        state.token = action.payload.token;
+        sessionStorage.setItem('token', action.payload.token);
+        console.log('Auth Slice: Token stored in sessionStorage:', action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.token = null;
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
+        console.log('Auth Slice: CheckAuth fulfilled:', action.payload);
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
       })
       .addCase(checkAuth.rejected, (state, action) => {
+        console.log('Auth Slice: CheckAuth rejected:', action.error);
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
@@ -127,9 +166,11 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.token = null;
+        sessionStorage.removeItem('token');
       });
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setLoading, resetTokenAndCredentials } = authSlice.actions;
 export default authSlice.reducer;
