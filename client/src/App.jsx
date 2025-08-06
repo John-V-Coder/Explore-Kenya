@@ -27,19 +27,19 @@ import PaypalCancelPage from './pages/shopping-view/PaypalCancelPage';
 
 function App() {
 
-  const { user,isAuthenticated,token,isLoading } = useSelector(
+  const { user,isAuthenticated,isLoading } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-  const token = sessionStorage.getItem("token"); // Remove JSON.parse
+  const token = JSON.parse(sessionStorage.getItem("token")); 
   dispatch(checkAuth(token));
-}, [dispatch]); // Remove token from dependencies
+}, [dispatch]); 
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-  console.log(isLoading, user);
+  console.log(isLoading, JSON, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
