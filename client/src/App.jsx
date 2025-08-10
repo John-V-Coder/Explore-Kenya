@@ -23,6 +23,7 @@ import { useEffect } from 'react';
 import CheckAuth from './components/common/check-auth';
 import { Skeleton } from './components/components/ui/skeleton';
 import { checkAuth } from './store/auth-slice';
+import { loadGuestCart } from './store/shop/cart-slice';
 import PaypalCancelPage from './pages/shopping-view/PaypalCancelPage';
 
 function App() {
@@ -33,9 +34,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-  const token = JSON.parse(sessionStorage.getItem("token")); 
-  dispatch(checkAuth(token));
-}, [dispatch]); 
+    const token = JSON.parse(sessionStorage.getItem("token")); 
+    dispatch(checkAuth(token));
+    
+    // Load guest cart if no token exists
+    if (!token) {
+      dispatch(loadGuestCart());
+    }
+  }, [dispatch]); 
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
@@ -80,11 +86,7 @@ function App() {
         </Route>
         <Route
           path="/shop"
-          element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <ShoppingLayout />
-            </CheckAuth>
-          }
+          element={<ShoppingLayout />}
         >
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />

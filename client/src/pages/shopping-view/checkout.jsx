@@ -2,21 +2,38 @@ import { Button } from "@/components/components/ui/button";
 import { useToast } from "@/components/components/ui/use-toast";
 import Address from "@/components/shopping-view/address";
 import UserCartItemsContent from "@/components/shopping-view/cart-item-content";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import img from "../../assets/account.jpg";
 import { createNewOrder } from "@/store/shop/order-slice";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
 function ShoppingCheckout() {
   const { cartItems } = useSelector((state) => state.shopCart);
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { approvalURL } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useDispatch();
   const { toast } = useToast();
   const checkoutSectionRef = useRef(null);
+  const navigate = useNavigate();
+
+    // Redirect unauthenticated users to login
+  useEffect(() => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Please login or register to continue with checkout",
+        description: "You need to be logged in to complete your purchase",
+        variant: "destructive",
+      });
+      navigate('/auth/login');
+      return;
+    }
+  }, [isAuthenticated, navigate, toast]);
+
+
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0

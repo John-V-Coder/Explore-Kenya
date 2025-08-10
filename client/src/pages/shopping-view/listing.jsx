@@ -95,11 +95,15 @@ function ShoppingListing() {
       }
     }
 
+    // Find product details from the product list
+    const productDetails = productList.find(product => product._id === getCurrentProductId);
+
     dispatch(
       addToCart({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
+        productDetails: productDetails,
       })
     ).then((data) => {
       if (data?.payload?.success) {
@@ -115,6 +119,11 @@ function ShoppingListing() {
     setSort("price-lowtohigh");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, [categorySearchParam]);
+
+  // Load cart items on component mount
+  useEffect(() => {
+    dispatch(fetchCartItems(user?.id));
+  }, [dispatch, user?.id]);
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { mergeGuestCart } from "../shop/cart-slice";
 
 const initialState = {
   isAuthenticated: false,
@@ -28,7 +29,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "/auth/login",
 
-  async (formData) => {
+  async (formData, { dispatch }) => {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/auth/login`,
       formData,
@@ -36,6 +37,11 @@ export const loginUser = createAsyncThunk(
         withCredentials: true,
       }
     );
+
+    // If login successful, merge guest cart with user cart
+    if (response.data.success && response.data.user?.id) {
+      dispatch(mergeGuestCart(response.data.user.id));
+    }
 
     return response.data;
   }

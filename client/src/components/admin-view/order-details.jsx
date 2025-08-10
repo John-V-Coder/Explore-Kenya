@@ -16,6 +16,26 @@ const initialFormData = {
   status: "",
 };
 
+// Helper function to get status color
+function getStatusColor(status) {
+  switch (status) {
+    case "pending":
+      return "bg-yellow-500 text-white";
+    case "inProcess":
+      return "bg-blue-500 text-white";
+    case "inShipping":
+      return "bg-purple-500 text-white";
+    case "delivered":
+      return "bg-green-500 text-white";
+    case "rejected":
+      return "bg-red-600 text-white";
+    case "confirmed":
+      return "bg-green-600 text-white";
+    default:
+      return "bg-gray-500 text-white";
+  }
+}
+
 function AdminOrderDetailsView({ orderDetails }) {
   const [formData, setFormData] = useState(initialFormData);
   const { user } = useSelector((state) => state.auth);
@@ -28,6 +48,14 @@ function AdminOrderDetailsView({ orderDetails }) {
     event.preventDefault();
     const { status } = formData;
 
+    if (!status) {
+      toast({
+        title: "Please select a status",
+        variant: "destructive",
+      });
+      return;
+    }
+
     dispatch(
       updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
     ).then((data) => {
@@ -38,7 +66,17 @@ function AdminOrderDetailsView({ orderDetails }) {
         toast({
           title: data?.payload?.message,
         });
+      } else {
+        toast({
+          title: "Failed to update order status",
+          variant: "destructive",
+        });
       }
+    }).catch((error) => {
+      toast({
+        title: "Error updating order status",
+        variant: "destructive",
+      });
     });
   }
 
@@ -70,13 +108,7 @@ function AdminOrderDetailsView({ orderDetails }) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed"
-                    ? "bg-green-500"
-                    : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
-                }`}
+                className={`py-1 px-3 ${getStatusColor(orderDetails?.orderStatus)}`}
               >
                 {orderDetails?.orderStatus}
               </Badge>

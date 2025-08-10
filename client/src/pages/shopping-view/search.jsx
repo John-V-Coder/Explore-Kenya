@@ -5,9 +5,10 @@ import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useState, useEffect } from "react";
 import { useSelector,  useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { fetchCartItems } from "@/store/shop/cart-slice";
+import { fetchCartItems, addToCart } from "@/store/shop/cart-slice";
 import { fetchProductDetails } from "@/store/shop/products-slice";
 import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
+import { Search } from "lucide-react";
 
 
 function SearchProducts() {
@@ -55,11 +56,15 @@ function SearchProducts() {
       }
     }
 
+    // Find product details from the search results
+    const productDetails = searchResults.find(product => product._id === getCurrentProductId);
+
     dispatch(
       addToCart({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
+        productDetails: productDetails,
       })
     ).then((data) => {
       if (data?.payload?.success) {
@@ -85,14 +90,19 @@ function SearchProducts() {
   return (
     <div className="container mx-auto md:px-6 px-4 py-8">
       <div className="flex justify-center mb-8">
-        <div className="w-full flex items-center">
-          <Input
-            value={keyword}
-            name="keyword"
-            onChange={(event) => setKeyword(event.target.value)}
-            className="py-6"
-            placeholder="Search Products..."
-          />
+        <div className="w-full flex items-center justify-center">
+          <div className="relative w-full max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-6 w-6 text-gray-400" />
+            </div>
+            <Input
+              value={keyword}
+              name="keyword"
+              onChange={(event) => setKeyword(event.target.value)}
+              className="py-6 pl-12"
+              placeholder="Search Products..."
+            />
+          </div>
         </div>
       </div>
       {!searchResults.length ? (

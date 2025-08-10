@@ -5,10 +5,20 @@ const addToCart = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
 
-    if (!userId || !productId || quantity <= 0) {
+    // Allow guest users (no userId) to add to cart
+    if (!productId || quantity <= 0) {
       return res.status(400).json({
         success: false,
         message: "Invalid data provided!",
+      });
+    }
+
+    // If no userId, this is a guest user - return success for client-side handling
+    if (!userId) {
+      return res.status(200).json({
+        success: true,
+        message: "Guest cart updated successfully",
+        data: { items: [] }
       });
     }
 
@@ -55,10 +65,12 @@ const fetchCartItems = async (req, res) => {
   try {
     const { userId } = req.params;
 
+    // Allow guest users (no userId) to fetch cart
     if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "User id is manadatory!",
+      return res.status(200).json({
+        success: true,
+        message: "Guest cart fetched successfully",
+        data: { items: [] }
       });
     }
 
@@ -112,10 +124,19 @@ const updateCartItemQty = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
 
-    if (!userId || !productId || quantity <= 0) {
+    if (!productId || quantity <= 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid data provided!",
+        message: "Product id and quantity are mandatory!",
+      });
+    }
+
+    // If no userId, this is a guest user - return success for client-side handling
+    if (!userId) {
+      return res.status(200).json({
+        success: true,
+        message: "Guest cart item updated successfully",
+        data: { items: [] }
       });
     }
 
@@ -174,10 +195,19 @@ const updateCartItemQty = async (req, res) => {
 const deleteCartItem = async (req, res) => {
   try {
     const { userId, productId } = req.params;
-    if (!userId || !productId) {
+    if (!productId) {
       return res.status(400).json({
         success: false,
-        message: "Invalid data provided!",
+        message: "Product id is mandatory!",
+      });
+    }
+
+    // If no userId, this is a guest user - return success for client-side handling
+    if (!userId) {
+      return res.status(200).json({
+        success: true,
+        message: "Guest cart item deleted successfully",
+        data: { items: [] }
       });
     }
 

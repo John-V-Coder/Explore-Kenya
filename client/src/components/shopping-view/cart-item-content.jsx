@@ -11,6 +11,8 @@ function UserCartItemsContent({ cartItem }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
+
+
   function handleUpdateQuantity(getCartItem, typeOfAction) {
     if (typeOfAction === "plus") {
       let getCartItems = cartItems.items || [];

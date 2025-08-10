@@ -67,11 +67,15 @@ function ShoppingHome() {
   }
 
   function handleAddtoCart(getCurrentProductId) {
+    // Find product details from the product list
+    const productDetails = productList.find(product => product._id === getCurrentProductId);
+    
     dispatch(
       addToCart({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
+        productDetails: productDetails,
       })
     ).then((data) => {
       if (data?.payload?.success) {
@@ -106,6 +110,11 @@ function ShoppingHome() {
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
+
+  // Load cart items on component mount
+  useEffect(() => {
+    dispatch(fetchCartItems(user?.id));
+  }, [dispatch, user?.id]);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

@@ -75,6 +75,28 @@ const adminOrderSlice = createSlice({
       .addCase(getOrderDetailsForAdmin.rejected, (state) => {
         state.isLoading = false;
         state.orderDetails = null;
+      })
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Update the order in the list if it exists
+        if (action.payload.success) {
+          const orderIndex = state.orderList.findIndex(
+            order => order._id === action.meta.arg.id
+          );
+          if (orderIndex !== -1) {
+            state.orderList[orderIndex].orderStatus = action.meta.arg.orderStatus;
+          }
+          // Update order details if it's the current one
+          if (state.orderDetails && state.orderDetails._id === action.meta.arg.id) {
+            state.orderDetails.orderStatus = action.meta.arg.orderStatus;
+          }
+        }
+      })
+      .addCase(updateOrderStatus.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });

@@ -47,11 +47,21 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         }
       }
     }
+    // Product details are already available in this component
+    const productDetails = {
+      title: productDetails?.title,
+      image: productDetails?.image,
+      price: productDetails?.price,
+      salePrice: productDetails?.salePrice,
+      category: productDetails?.category
+    };
+
     dispatch(
       addToCart({
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
+        productDetails: productDetails,
       })
     ).then((data) => {
       if (data?.payload?.success) {
